@@ -1,0 +1,3 @@
+[submodule "d4n-apache-nifi"]
+	path = d4n-apache-nifi
+	url = https://code.officialstatistics.org/d4n-it-skeleton-pipeline/d4n-apache-nifi.git

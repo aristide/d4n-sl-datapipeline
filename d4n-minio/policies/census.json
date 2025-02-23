@@ -1,0 +1,56 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowListingBucketsFromConsole",
+            "Effect": "Allow",
+            "Action": ["s3:GetBucketLocation", "s3:ListAllMyBuckets"],
+            "Resource": [
+                "arn:aws:s3:::staging"
+            ]
+        },
+        {
+            "Sid": "AllowNavigationToCensusFolder",
+            "Effect": "Allow",
+            "Action": ["s3:ListBucket"],
+            "Resource": [
+                "arn:aws:s3:::staging"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "s3:prefix": [
+                        "",
+                        "Census/"
+                    ],
+                    "s3:delimiter": ["/"]
+                }
+            }
+        },
+        {
+            "Sid": "AllowListingCensusFolderContent",
+            "Effect": "Allow",
+            "Action": ["s3:ListBucket"],
+            "Resource": [
+                "arn:aws:s3:::staging"
+            ],
+            "Condition": {
+                "StringLike": {
+                    "s3:prefix": [
+                        "Census/*"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "AllowDownloadCensusFolderContent",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::staging/Census/*"
+            ]
+        }
+    ]
+}

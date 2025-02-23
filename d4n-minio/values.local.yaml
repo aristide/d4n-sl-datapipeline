@@ -1,0 +1,74 @@
+## minio mode, i.e. standalone or distributed
+mode: distributed ## other supported values are "standalone"
+
+# Number of drives attached to a node
+drivesPerNode: 1
+# Number of MinIO containers running
+# <- change me ->
+replicas: 2
+# Number of expanded MinIO clusters
+pools: 1
+
+persistence:
+  enabled: true
+  # <- change me ->
+  size: 2Gi
+
+resources:
+  requests:
+    # <-change me->
+    memory: 1Gi
+
+## List of users to be created after minio install
+users:
+  ## make sure to disable this if you are using LDAP.
+  - accessKey: serviceaccount
+    secretKey: PassWordD4Now
+    policy: consoleAdmin
+
+## List of buckets to be created after minio install
+buckets:
+  - name: raw
+    policy: none   
+    purge: false
+    versioning: true
+    objectlocking: false
+  - name: anonymized
+    policy: none
+    purge: false
+    versioning: true
+    objectlocking: false
+  - name: staging
+    policy: none
+    purge: false
+    versioning: true
+    objectlocking: false
+  - name: aggregated
+    policy: none
+    purge: false
+    versioning: true
+    objectlocking: false
+
+## List of command to run after minio install
+## NOTE: the mc command TARGET is always "myminio"
+customCommands:
+  # <- uncomment and  change me if you are using active directory/ldap identity management ->
+  # - command: "admin policy attach myminio consoleAdmin --user='CN=Service Account,OU=Data Engineers,OU=Datalake,DC=data4now,DC=org'"
+
+## Use this field to add environment variables relevant to MinIO server. These fields will be passed on to MinIO container(s)
+## when Chart is deployed
+environment: 
+  ## Please refer for comprehensive list https://min.io/docs/minio/linux/reference/minio-server/minio-server.html
+  ## MINIO_SUBNET_LICENSE: "License key obtained from https://subnet.min.io"
+  ## MINIO_BROWSER: "off"
+  # <- uncomment and change me if you are using active directory/ldap identity management ->
+  # MINIO_IDENTITY_LDAP_SERVER_ADDR: "ldap.d4n-utils.svc.cluster.local:389"
+  # MINIO_IDENTITY_LDAP_LOOKUP_BIND_DN: "CN=Service Account,OU=Data Engineers,OU=Datalake,DC=data4now,DC=org" 
+  # MINIO_IDENTITY_LDAP_LOOKUP_BIND_PASSWORD: "PassWordD4Now"
+  # MINIO_IDENTITY_LDAP_USER_DN_SEARCH_BASE_DN: "DC=data4now,DC=org" # organization domaine
+  # MINIO_IDENTITY_LDAP_USER_DN_SEARCH_FILTER: "(&(objectClass=user)(sAMAccountName=%s))"  # or (&(objectCategory=user)(sAMAccountName=%s))
+  # MINIO_IDENTITY_LDAP_GROUP_SEARCH_BASE_DN: "DC=data4now,DC=org"  # organization domaine
+  # MINIO_IDENTITY_LDAP_GROUP_SEARCH_FILTER: "(&(objectClass=group)(member=%d))" # or (&(objectClass=group)(member=%d))
+  # MINIO_IDENTITY_LDAP_TLS_SKIP_VERIFY: "off"
+  # MINIO_IDENTITY_LDAP_SERVER_INSECURE: "on"
+  # MINIO_API_CORS_ALLOW_ORIGIN: "*"

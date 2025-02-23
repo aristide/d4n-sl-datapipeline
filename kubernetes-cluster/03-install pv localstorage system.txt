@@ -1,0 +1,46 @@
+install openebs 
+
+on each node:
+------------
+#### install lvm
+sudo apt install -y lvm2
+sudo modprobe dm-snapshot
+
+####
+sudo lvs
+sudo vgs 
+sudo pvs
+
+#### Create a new logical volume for OpenEBS using 300GB of the available 408.95GB
+sudo lvcreate -L 300G -n openebs-lv ubuntu-vg
+
+#### Create an ext4 filesystem on the new logical volume
+sudo mkfs.ext4 /dev/ubuntu-vg/openebs-lv
+
+#### Create a mount point for OpenEBS
+sudo mkdir -p /mnt/openebs
+
+#### Add entry to /etc/fstab for persistent mounting
+echo '/dev/ubuntu-vg/openebs-lv /mnt/openebs ext4 defaults 0 2' | sudo tee -a /etc/fstab
+
+#### Mount the new filesystem
+sudo mount /mnt/openebs
+
+#### Verify the setup
+sudo lvs
+sudo df -h /mnt/openebs
+
+
+On the master or workstation:
+-----------------------------
+helm repo add openebs https://openebs.github.io/openebs
+helm repo update
+helm show values openebs/openebs > openebs-config.yaml
+helm install openebs --namespace openebs openebs/openebs --create-namespace --values openebs-config.yaml
+
+
+
+
+
+
+

@@ -1,0 +1,105 @@
+hub:
+  config:
+    # <- uncomment and change me if you want to enable ldap active->
+    # Authenticator:
+    #   # admin users. List of admin usernames/or DN 
+    #   admin_users:
+    #     - CN=Service Account,OU=General,DC=data4now,DC=org
+    # JupyterHub:
+    #   admin_access: true
+    #   authenticator_class: ldapauthenticator.LDAPAuthenticator
+    # LDAPAuthenticator:
+    #   server_address: ldap-active-directory.d4n-utils.svc.cluster.local
+    #   # Defaults port is set to 389 if no SSL is being used, and 636 is SSL is being used. 
+    #   server_port: 389
+    #   # Boolean to specify whether to use SSL encryption when contacting the LDAP server
+    #   use_ssl: false
+    #   # groups whose members are allowed to log in. a list of full DNs that have a member attribute that includes the current user attempting to log in.
+    #   allowed_groups:
+    #     - CN=Data Admins,OU=Datalake,DC=data4now,DC=org
+    #     - CN=Data Analysts,OU=Datalake,DC=data4now,DC=org
+    #     - CN=Data Engineers,OU=Datalake,DC=data4now,DC=org
+    #     - CN=Data Orchestrators,OU=Datalake,DC=data4now,DC=org    
+    #   # All usernames will be checked against this before being sent to LDAP. This acts as both an easy way to filter out invalid usernames as well as protection against LDAP injection attacks
+    #   valid_username_regex: "[a-zA-Z0-9_.][a-zA-Z0-9_.-]{0,252}[a-zA-Z0-9_.$-]?"
+    #   # To authenticate a user we need the corresponding DN to bind against the LDAP server. Enable a reverse lookup to obtain the user's DN. This is because ome LDAP servers, such as Active Directory, don't always bind with the true DN
+    #   lookup_dn: true
+    #   # How to query LDAP for user name lookup
+    #   lookup_dn_search_filter: ({login_attr}={login})
+    #   # Technical account DN for user lookup
+    #   lookup_dn_search_user: CN=Service Account,OU=General,DC=data4now,DC=org
+    #   # Technical account password for user lookup
+    #   lookup_dn_search_password: PassWordD4Now
+    #   # Attribute containing user's name needed for building DN string
+    #   lookup_dn_user_dn_attribute: CN  # CN or distinguishedName
+    #   # Defines the search base for looking up users in the directory: Container/OU or base Domain
+    #   user_search_base: DC=data4now,DC=org
+    #   # Defines the attribute that stores a user's username in your directory
+    #   user_attribute: sAMAccountName
+    #   # If set to True, escape special chars in userdn when authenticating in LDAP
+    #   escape_userdn: false
+    #   # Is list of string template used to generate the full DN for a user from the human readable username
+    #   #bind_dn_template: '{username}'
+    #   use_lookup_dn_username: false
+    # <- uncomment and change me for dummy authentication ->
+    Authenticator:
+      admin_users:
+        - data4now
+      allowed_users:
+        - analyst
+    DummyAuthenticator:
+      password: PassWordD4Now
+    JupyterHub:
+      admin_access: true
+      authenticator_class: dummy
+  db:
+    type: sqlite-pvc
+    upgrade:
+    pvc:
+      annotations: {}
+      selector: {}
+      accessModes:
+        - ReadWriteOnce
+      storage: 2Gi
+      subPath:
+      storageClassName:
+    url:
+    password:
+
+# singleuser relates to the configuration of KubeSpawner which runs in the hub
+# pod, and its spawning of user pods such as jupyter-myusername.
+singleuser:
+  extraEnv: {}
+    # <!- install extra python or R packages ->
+    # <!- Warning: depending on the package, the nootbook will take a bit longer to start ->
+    # PYTHON_PACKAGES: "pandas"
+    # R_PACKAGES: "dplyr"
+  storage:
+    # <- change me to increase  user pod storage capacity ->
+    capacity: 3Gi
+    homeMountPath: /home/d4now
+  image:
+    name: aristidetm/basic-notebook
+    tag: "3.6.6"
+  # <- change me to increase user pod cpu limit ->
+  cpu:
+    limit:
+    guarantee: 0.5
+  # <- change me to increase user pod memory limit ->
+  memory:
+    limit:
+    guarantee: 1G
+
+cull:
+  enabled: true
+  users: false # --cull-users
+  adminUsers: true # --cull-admin-users
+  removeNamedServers: false # --remove-named-servers
+  timeout: 3600 # --timeout
+  every: 600 # --cull-every
+  # <- change me to enable more concurrent users ->
+  concurrency: 10 # --concurrency
+  maxAge: 172800 # --max-age (2 days)
+
+
+

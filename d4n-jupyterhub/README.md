@@ -1,6 +1,8 @@
-# d4n-statsl-datapipeline 
+# D4N-JupyterHub
 
-## Prerequisites
+[Credit to Zerok8chart](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/tree/main)
+
+# Prerequisites
 
 - [Kubernetes cluster](https://kubernetes.io/docs/concepts/overview/components/): >= 1.24.1
 - [Helm](https://helm.sh/docs/intro/install/): >= 3.8.0
@@ -17,30 +19,10 @@ For AKS cluster follow the links:
 - [az cli](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - [Let kubectl manage your AKS cluster](https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster?tabs=azure-cli#connect-to-cluster-using-kubectl)
 
-## Minio 
+
+# Installation
 
 ```bash
-# move to minio folder
-$cd d4n-minio
-# create the namespace
-$kubectl create namespace d4n-storage
-# copy and edit the local config file
-$cp values.local.yaml config.yaml
-# install or upgrade minio
-$helm upgrade --cleanup-on-fail --install minio  .  --namespace d4n-storage --values config.yaml
-# make it avaible at port 30901 & 30900
-$kubectl apply -f proxy.nodeport.yaml --namespace d4n-storage
-```
-
-- Open Minio console: http://{master_ip_address}:30901
-- Access Minio API: http://{master_ip_address}:30900
-
-## Jupyterlab
-
-
-```bash
-# move to jupyterhub folder
-$cd d4n-jupyterhub
 # load helm repository
 $helm repo add jupyterhub https://hub.jupyter.org/helm-chart/
 $helm repo update
@@ -56,22 +38,21 @@ $kubectl apply -f proxy.nodeport.yaml --namespace d4n-analytics
 
 - Open Jupyterhub: http://{master_ip_address}:30808
 
-## Apache Nifi
+# Uninstallation
 
-````bash
-# move to nifi folder
-$cd d4n-apache-nifi
-# load apache nifi application from helm repository
-$helm repo add cetic https://cetic.github.io/helm-charts
-$helm repo update
-# copy from .local and edit the config file
-$cp values.local.yaml config.yaml
-# create the namespace 
-$kubectl create namespace d4n-ingestion
-# install or update apache nifi
-$helm upgrade --cleanup-on-fail --install nifi cetic/nifi  --namespace d4n-ingestion --version=1.2.1 --values config.yaml
-# make it avaible at port 30443
-$kubectl apply -f proxy.nodeport.yaml --namespace d4n-ingestion
-````
-- Open Apache Nifi: https://localhost:30443
+Uninstall and remove all the resources 
+
+```bash
+$kubectl delete namespace d4n-analytics
+```
+# Configurations
+
+The variables to consider when configuring the deployment.
+
+Requirements:
+   - create a technical user with the rigth to read DN from AD.
+   - LDAP config variables are provided by [ldap authenticator module](https://github.com/jupyterhub/ldapauthenticator)
+   - size your installation: nbr of user etc.
+
+
 

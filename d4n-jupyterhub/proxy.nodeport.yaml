@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: public-proxy-nodeport
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+      nodePort: 30808
+  selector:
+    app: jupyterhub
+    component: proxy
+    release: jupyter

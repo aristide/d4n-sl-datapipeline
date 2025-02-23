@@ -1,0 +1,111 @@
+---
+# Number of nifi nodes
+# <- change me and increase replicat count to set nifi in cluster mode ->
+replicaCount: 1
+
+## Set default image, imageTag, and imagePullPolicy.
+## ref: https://hub.docker.com/r/apache/nifi/
+##
+image:
+  repository: aristidetm/nifi
+  tag: "1.26.0"
+  pullPolicy: "IfNotPresent"
+
+properties:
+  # <- change me if replicaCount > 1 in cluster mode -> 
+  isNode: false
+   # <- change me to add custom domain or ip:port adress ->
+  webProxyHost: # <clusterIP>:<NodePort> (If Nifi service is NodePort or LoadBalancer)
+  clusterPort: 6007
+  zkClientEnsembleTraker: false # https://issues.apache.org/jira/browse/NIFI-10481
+  clusterNodeConnectionTimeout: '5 sec'
+  clusterNodeReadTimeout: '5 sec'
+  zookeeperConnectTimeout: '3 secs'
+  zookeeperSessionTimeout: '3 secs'
+  archiveMaxRetentionPeriod: "3 days"
+  archiveMaxUsagePercentage: "85%"
+  provenanceStorage: "1 GB"
+  provenanceMaxStorageTime: "10 days"
+  flowArchiveMaxTime: "30 days"
+  flowArchiveMaxStorage: "500 MB"
+  siteToSite:
+    port: 10000
+  # use properties.safetyValve to pass explicit 'key: value' pairs that overwrite other configuration
+  safetyValve:
+    #nifi.variable.registry.properties: "${NIFI_HOME}/example1.properties, ${NIFI_HOME}/example2.properties"
+    nifi.web.http.network.interface.default: eth0
+    # listen to loopback interface so "kubectl port-forward ..." works
+    nifi.web.http.network.interface.lo: lo
+    # <- change me and add custom domain or ip adresses to http headers ->
+    # nifi.web.proxy.host: <master IP address>:30443
+
+# Nifi User Authentication
+auth:
+  # If set while LDAP is enabled, this value will be used for the initial admin and not the ldap bind dn / admin
+  # <- change me by commenting if ldap is enabled ->
+  # /!\ doest not support special caracters like "&" etc.
+  admin: cn=Service Account,ou=General,dc=data4now,dc=org # if ldap enabled, it should correspond value found in identityStrategy (username or dn) 
+
+  # Automaticaly disabled if OIDC or LDAP enabled
+  singleUser:
+    username: serviceaccount
+    password: PassWordD4Now # Must to have at least 12 characters
+
+  # ldap properties : https://docs.cloudera.com/cfm/2.0.4/cfm-security/topics/cfm-security-ldap-user-group-provider-parameters.html
+  # <- change me if you want to enable active directory ->
+  ldap:
+    enabled: false
+    host: ldap://ldap.d4n-utils.svc.cluster.local:389
+    searchBase: ou=General,dc=data4now,dc=org 
+    admin: cn=Service Account,ou=General,dc=data4now,dc=org
+    pass: PassWordD4Now
+    searchFilter: (sAMAccountName=*)
+    userIdentityAttribute: sAMAccountName
+    UserIdentityAttribute: sAMAccountName
+    authStrategy: SIMPLE # How the connection to the LDAP server is authenticated. Possible values are ANONYMOUS, SIMPLE, LDAPS, or START_TLS.
+    IdentityStrategy: USE_DN
+    authExpiration: 12 hours
+    userSearchScope: SUBTREE # Search scope for searching users (ONE_LEVEL, OBJECT, or SUBTREE). Required if searching users.
+    groupSearchScope: SUBTREE # Search scope for searching groups (ONE_LEVEL, OBJECT, or SUBTREE). Required if searching groups.
+
+# <- enable and change me to increase java memory heap ->
+# Amount of memory to give the NiFi java heap
+jvmMemory: 3g
+
+# <- change me to keep configurations persistent ->
+persistence:
+  enabled: true
+  subPath:
+    enabled: true
+    name: data
+    size: 6Gi
+
+resources: {}
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+# <- change me to true for a working cluster mode -->
+certManager:
+  enabled: false
+
+zookeeper:
+  # <- change me and enable set nifi in cluster mode ->
+  ## If true, install the Zookeeper chart
+  ## ref: https://github.com/bitnami/charts/blob/master/bitnami/zookeeper/values.yaml
+  enabled: false
+  ## If the Zookeeper Chart is disabled a URL and port are required to connect
+  url: ""
+  port: 2181
+  replicaCount: 1
+
+registry:
+  # <- change me to enable registry ->
+  enabled: false
+  url: ""
+  port: 80
+  replicaCount: 1
+

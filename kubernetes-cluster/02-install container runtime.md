@@ -14,7 +14,6 @@ $sudo apt install -y docker-ce docker-ce-cli containerd.io
 $sudo systemctl enable docker
 $sudo systemctl start docker
 
-
 ## install cri
 $sudo VERSION=0.3.4
 $sudo wget https://github.com/Mirantis/cri-dockerd/releases/download/v${VERSION}/cri-dockerd-${VERSION}.amd64.tgz

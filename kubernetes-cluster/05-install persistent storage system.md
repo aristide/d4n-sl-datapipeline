@@ -1,4 +1,4 @@
-## Install Persistente storage
+## Install Persistente storage on the master
 
 ```bash
 ## install required packages

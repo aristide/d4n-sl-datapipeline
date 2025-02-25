@@ -1,6 +1,8 @@
 # Prepare the server (all nodes)
 
 ```bash
+## update the packages
+$sudo apt-get update -y
 ## Disable swap
 $sudo swapoff -a
 $sudo sed -i '/swap/d' /etc/fstab

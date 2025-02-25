@@ -15,7 +15,7 @@ $sudo systemctl enable docker
 $sudo systemctl start docker
 
 ## install cri
-$sudo VERSION=0.3.4
+$VERSION=0.3.4
 $sudo wget https://github.com/Mirantis/cri-dockerd/releases/download/v${VERSION}/cri-dockerd-${VERSION}.amd64.tgz
 $sudo tar xvf cri-dockerd-${VERSION}.amd64.tgz
 $sudo mv cri-dockerd/cri-dockerd /usr/local/bin/

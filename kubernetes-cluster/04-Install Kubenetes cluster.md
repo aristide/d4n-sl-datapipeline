@@ -27,7 +27,7 @@ $sudo kk add nodes -f kubernetes-config.yaml
 ## download metrics server kubernetes component
 $sudo wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ## edit and add "--kubelet-insecure-tls" argument to the args section of the Metrics Server container
-$sudo nano component.yaml
+$sudo nano components.yaml
 ## install the 
 $sudo kubectl apply -f components.yaml
 $sudo kubectl get deployment metrics-server -n kube-system

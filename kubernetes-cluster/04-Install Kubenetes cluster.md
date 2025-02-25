@@ -13,7 +13,8 @@ $sudo kk create config -f kubernetes-config.yaml
 #  - {name: master, address: 172.31.5.246, internalAddress: 172.31.5.246, user: root, privateKeyPath: "~/.ssh/id_rsa"}
 #  ....
 #  kubernetes:
-##   version: v1.25.3
+#   # more supported version: https://github.com/kubesphere/kubekey/blob/master/docs/kubernetes-versions.md
+#    version: v1.25.3
 #    containerManager: docker
 #  ....
 #  network:

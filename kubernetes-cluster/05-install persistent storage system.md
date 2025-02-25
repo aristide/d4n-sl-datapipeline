@@ -9,8 +9,10 @@ $sudo systemctl start iscsid
 ## Load the iSCSI kernel module
 $sudo modprobe iscsi_tcp
 $echo "iscsi_tcp" | sudo tee /etc/modules-load.d/iscsi_tcp.conf
-## download helm 
-$sudo curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+## check the readiness of the system
+$sudo curl -sSfL -o longhornctl https://github.com/longhorn/cli/releases/download/v1.8.0/longhornctl-linux-amd64
+$sudo chmod +x longhornctl
+$sudo ./longhornctl check preflight
 ## add longhorn repo
 $sudo helm repo add longhorn https://charts.longhorn.io
 $sudo helm repo update

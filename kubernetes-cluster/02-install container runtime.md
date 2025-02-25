@@ -24,6 +24,10 @@ $sudo wget https://raw.githubusercontent.com/Mirantis/cri-dockerd/master/packagi
 $sudo wget https://raw.githubusercontent.com/Mirantis/cri-dockerd/master/packaging/systemd/cri-docker.socket
 $sudo mv cri-docker.socket cri-docker.service /etc/systemd/system/
 $sudo sed -i -e 's,/usr/bin/cri-dockerd,/usr/local/bin/cri-dockerd,' /etc/systemd/system/cri-docker.service
+$sudo systemctl daemon-reload
+$sudo systemctl enable cri-docker
+$sudo systemctl start cri-docker
+$sudo systemctl status cri-docker
 ```
 
 ## choice 2: Containerd 

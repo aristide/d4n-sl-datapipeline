@@ -36,7 +36,7 @@ $kubectl create namespace d4n-storage
 # copy and edit the local config file
 $cp values.local.yaml config.yaml
 # install or upgrade minio
-$helm upgrade --cleanup-on-fail --install minio minio/minio  --namespace d4n-storage --values config.yaml
+$helm upgrade --cleanup-on-fail --install minio .  --namespace d4n-storage --values config.yaml
 # make it avaible at port 30901 & 30900
 $kubectl apply -f proxy.nodeport.yaml --namespace d4n-storage
 ```

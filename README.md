@@ -28,15 +28,16 @@ $kubectl create namespace d4n-storage
 $cp values.local.yaml config.yaml
 # install or upgrade minio
 $helm upgrade --cleanup-on-fail --install minio  .  --namespace d4n-storage --values config.yaml
-# make it avaible at port 30901 & 30900
+# make it avaible at port 30901 & 30900 on the server
 $kubectl apply -f proxy.nodeport.yaml --namespace d4n-storage
+# make it avaible at http://localhost:9001 on local docker-desktop k8s cluster
+$kubectl apply -f ../kubernetes-cluster/configs/local-loadbalancer.yaml
 ```
 
 - Open Minio console: http://{master_ip_address}:30901
 - Access Minio API: http://{master_ip_address}:30900
 
 ## Jupyterlab
-
 
 ```bash
 # move to jupyterhub folder
@@ -50,8 +51,10 @@ $kubectl create namespace d4n-analytics
 $cp values.local.yaml config.yaml
 # install or upgrade the environement
 $helm upgrade --cleanup-on-fail --install jupyter jupyterhub/jupyterhub  --namespace d4n-analytics --version=3.0.3 --values config.yaml
-# make it avaible at port 30808
+# make it avaible at port 30808 on the server
 $kubectl apply -f proxy.nodeport.yaml --namespace d4n-analytics
+# make it avaible at http://localhost:8080 on local docker-desktop k8s cluster
+$kubectl apply -f ../kubernetes-cluster/configs/local-loadbalancer.yaml
 ```
 
 - Open Jupyterhub: http://{master_ip_address}:30808
@@ -70,8 +73,10 @@ $cp values.local.yaml config.yaml
 $kubectl create namespace d4n-ingestion
 # install or update apache nifi
 $helm upgrade --cleanup-on-fail --install nifi cetic/nifi  --namespace d4n-ingestion --version=1.2.1 --values config.yaml
-# make it avaible at port 30443
+# make it avaible at port 30443 on the server
 $kubectl apply -f proxy.nodeport.yaml --namespace d4n-ingestion
+# make it avaible on https://localhost:8443 on local docker-desktop k8s cluster
+$kubectl apply -f ../kubernetes-cluster/configs/local-loadbalancer.yaml
 ````
-- Open Apache Nifi: https://localhost:30443
+- Open Apache Nifi: https://{master_ip_address}:30443
 

@@ -39,7 +39,7 @@ $kubectl apply -f ../kubernetes-cluster/configs/local-loadbalancer.yaml
 
 🛎️ If your are deploying on the server
 ```bash
-# make it avaible at http://{master_ip_address}:309 on the server
+# make it avaible at http://{master_ip_address}:30901 on the server
 # for JupyterHub and Apache Nifi endpoint url, use: http://minio.d4n-storage.svc.cluster.local:9000
 $kubectl apply -f proxy.nodeport.yaml --namespace d4n-storage
 ```

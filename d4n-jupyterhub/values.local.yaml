@@ -66,6 +66,10 @@ hub:
     url:
     password:
 
+proxy:
+  service:
+    type: ClusterIP
+
 # singleuser relates to the configuration of KubeSpawner which runs in the hub
 # pod, and its spawning of user pods such as jupyter-myusername.
 singleuser:

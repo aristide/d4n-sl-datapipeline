@@ -34,6 +34,3 @@ Requirements:
    - create a technical user with the rigth to read DN(Distinguished Name) from AD.
    - LDAP config variables are provided by [ldap authenticator module](https://github.com/jupyterhub/ldapauthenticator)
    - size your installation: nbr of user etc.
-
-
-

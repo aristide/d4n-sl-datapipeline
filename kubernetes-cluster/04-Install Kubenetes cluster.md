@@ -1,11 +1,16 @@
 # Install Kubenetes cluster
 
+## Install the required packages
 ```bash
 ## install required packages
 $sudo apt-get install -y socat conntrack 
 ## download KubeKey  
 $sudo curl -sfL https://get-kk.kubesphere.io | sh -
-$sudo mv kk /usr/local/bin && sudo rm kubekey-*
+$sudo mv kk /usr/local/bin && sudo rm kubekey*
+```
+
+## Create and edit the cluster configuration
+```bash
 ## create kubernetes cluster config file
 $sudo kk create config -f kubernetes-config.yaml
 ## edit and add server configurations
@@ -20,17 +25,24 @@ $sudo kk create config -f kubernetes-config.yaml
 #  network:
 #    plugin: flannel
 $sudo nano kubernetes-config.yaml
+```
+
+## Deploy the cluster based on the configuration file 
+
+```bash
 ## install the cluster
 $sudo kk create cluster -f kubernetes-config.yaml
-## edvanced :edit the congi/!\ to add a new worker to the cluster: edit kubernetes-config.yaml  and run 
-$sudo kk add nodes -f kubernetes-config.yaml
-## download metrics server kubernetes component
-$sudo wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-## edit and add "--kubelet-insecure-tls" argument to the args section of the Metrics Server container
-$sudo nano components.yaml
-## install the 
-$sudo kubectl apply -f components.yaml
+```
+
+## Deploy a metrics component
+
+```bash
+## install the component
+$sudo kubectl apply -f https://github.com/aristide/d4n-sl-datapipeline/blob/main/kubernetes-cluster/configs/metrcics-server-components.yaml
+## Check the deployment process
 $sudo kubectl get deployment metrics-server -n kube-system
-## check the installation
+## make sure that the metrics server is running
+$sudo kubectl get pods --namespace kube-system
+## check the resources usage
 $sudo kubectl top nodes
 ```

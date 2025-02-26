@@ -1,3 +1,5 @@
 links.md
 config.yaml
 readonly-user-kubeconfig.yaml
+config.server.yaml
+plateform-resources-hypothesis.md

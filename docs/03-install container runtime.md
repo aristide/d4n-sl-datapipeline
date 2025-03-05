@@ -1,4 +1,4 @@
-# Container Runtime Installation (All Nodes)
+# 3. Container Runtime Installation
 
 This section details the installation and configuration of the container runtime, which is a fundamental requirement for Kubernetes nodes. The following steps ensure a reliable and efficient installation of Docker and cri-dockerd.
 

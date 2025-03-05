@@ -1,10 +1,10 @@
-# Configuring Kubectl on the Workstation
+# 7. Configuring Kubectl on the Workstation
 
 This section provides guidance on configuring `kubectl` on the workstation, ensuring connectivity with the Kubernetes cluster. The process varies based on whether `kubectl` is newly installed or if an existing configuration is present.
 
-## Configuration for a Newly Installed Kubectl
+## 7.1. Configuration for a Newly Installed Kubectl
 
-### Download the kubernetes config file from the cluster
+### 7.1.1. Download the kubernetes config file from the cluster
 
 ```powershell
 ## Create the .kube directory to store configuration files
@@ -17,13 +17,13 @@ C:\>kubectl config get-contexts
 C:\>kubectl get nodes
 ```
 
-### Modifying the Kubeconfig File
+### 7.1.2. Edit/Modifying the Kubeconfig File
 
 The kubeconfig file should be updated as shown below:
 
 ![Area to change](../img/admin_kubeconfig.png)
 
-### Verify the access to the cluster
+### 7.1.3. Verify the access to the cluster
 
 ```powershell
 ## Verify the Cluster Connection Again
@@ -31,24 +31,24 @@ C:\>kubectl config get-contexts
 C:\>kubectl get nodes
 ```
 
-## Configuration When an Existing Cluster is Already Set Up
+## 7.2. Configuration When an Existing Cluster is Already Set Up
 
 If the workstation already has an existing Kubernetes cluster configuration, follow these steps to merge the new kubeconfig file.
 
-### Download the kubernetes config file from the cluster
+### 7.2.1. Download the kubernetes config file from the cluster
 
 ```powershell
 ## Copy the new kubeconfig file from the master node to the local workstation
 C:\>scp root@$Env:D4N_MASTER_IP_ADDRESS:/etc/kubernetes/admin.conf $HOME\.kube\new-config
 ```
 
-### Modifying the `new-config` File
+### 7.2.2. Modifying the `new-config` File
 
 The `new-config` file should be edited as illustrated below:
 
 ![Area to change](../img/admin_kubeconfig.png)
 
-### Merge the both the new and current config files
+### 7.2.3. Merge both the new and current config files
 
 ```powershell
 ## Temporarily set the KUBECONFIG environment variable to include both configurations
@@ -65,7 +65,7 @@ C:\>Remove-Item -Path $HOME\.kube\new-config
 C:\>$Env:KUBECONFIG = "$HOME\.kube\config"
 ```
 
-### Verify the access to the cluster
+### 7.2.4. Verify the access to the cluster
 
 ```powershell
 ## Verify the Cluster Connection After Merging

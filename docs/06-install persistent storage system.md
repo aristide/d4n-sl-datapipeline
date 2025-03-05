@@ -1,8 +1,8 @@
-# Installation of Persistent Storage
+# 6. Installation of Persistent Storage
 
 This section outlines the necessary steps to install and configure persistent storage using Longhorn. These steps ensure that each node is equipped with the required dependencies, and that Longhorn is correctly deployed and verified within the Kubernetes cluster.
 
-## Installation of Required Packages for Longhorn (Each Node)
+## 6.1. Installation of Required Packages for Longhorn
 
 ```bash
 ## Update package lists to ensure availability of the latest versions
@@ -18,7 +18,7 @@ $sudo modprobe iscsi_tcp
 $echo "iscsi_tcp" | sudo tee /etc/modules-load.d/iscsi_tcp.conf
 ```
 
-## Installation of Longhorn from the Master Node
+## 6.2. Installation of Longhorn from the Master Node
 
 ```bash
 ## Add the official Longhorn Helm repository to the Helm package manager
@@ -36,7 +36,7 @@ $sudo kubectl apply -f $D4N_REPOSITORY/blob/main/docs/configs/longhorn-proxy.nod
 ## The Longhorn UI can now be accessed via HTTP at: http://<server_ip_address>:30080
 ```
 
-## Verification of Longhorn Deployment
+## 6.3. Verification of Longhorn Deployment
 
 ```bash
 ## Ensure that the Longhorn pod manager is running on each node

@@ -1,4 +1,4 @@
-# Server Preparation (All Nodes)
+# 2. Server Preparation (All Nodes)
 
 This section outlines the necessary steps to prepare all nodes in the infrastructure for deployment. The commands below ensure system updates, disable swap memory, and configure kernel parameters essential for Kubernetes operations.
 

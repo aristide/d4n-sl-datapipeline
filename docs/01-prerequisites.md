@@ -1,8 +1,8 @@
-# Prerequisites
+# 1. Prerequisites
 
 This section outlines the essential prerequisites for deploying the minimum Datalake infrastructure, ensuring that all necessary configurations are in place. It details the collection of critical network and system information, such as node IP addresses and repository links, to facilitate a structured deployment process. The workstation setup includes the installation of essential tools and the configuration of environment variables to maintain a standardized deployment environment. Furthermore, it provides step-by-step instructions for downloading required binaries, setting up working directories, and configuring both master and worker nodes.
 
-## Collect Essential Informations
+## 1.1. Collect Essential Informations
 
 The following preparatory information should be readily available:
 
@@ -11,11 +11,11 @@ The following preparatory information should be readily available:
 3. **Node Naming Convention:** Each node should be uniquely identified as "master," "node1," "node2," etc., referenced in the deployment command line as `{node_name}`.
 4. **Code Repository Access:** The hyperlink to the official code repository, referenced as `{code_repository_link}`.
 
-## 💻 Workstation Setup
+## 1.2. Workstation💻 Setup 
 
 It is assumed that the workstation operates on the Windows operating system.
 
-### Install the Essential Tools: Git, Lens, Docker-Desktop
+### 1.2.1. Install the Essential Tools: Git, Lens, Docker-Desktop
 
 To facilitate deployment, install the required tools using the following procedure:
 
@@ -40,7 +40,7 @@ C:\>choco install lens -y
 C:\>choco install docker-desktop -y
 ```
 
-### Establishment of Working Directories
+### 1.2.2. Establishment of Working Directories
 
 The directory structure of the workspace shall conform to the following schema:
 
@@ -65,7 +65,7 @@ C:\>mkdir "$HOME\data4now\cli"
 C:\>mkdir "$HOME\data4now\code"
 ```
 
-### Configuration of Environment Variables
+### 1.2.3. Configuration of Environment Variables
 
 Execute the following PowerShell commands to configure the necessary environment variables:
 
@@ -86,7 +86,7 @@ C:\>$newPath = "$currentPath;$D4N_WORKSPACE_CLI"
 C:\>[System.Environment]::SetEnvironmentVariable('Path', $newPath, [System.EnvironmentVariableTarget]::User)
 ```
 
-### Downloading Essential Binaries and Cloning the Repository
+### 1.2.4. Downloading Essential Binaries and Cloning the Repository
 
 ```powershell
 ## Download Helm
@@ -109,7 +109,7 @@ C:\>Invoke-WebRequest -Uri "https://dl.min.io/client/mc/release/windows-amd64/mc
 C:\>git clone "$Env:D4N_REPOSITORY.git" $Env:D4N_WORKSPACE_CODE
 ```
 
-## 🖥 Configuration on Master Node
+## 1.3. Configuration on Master🖥 Node
 
 ```bash
 ## Update package lists
@@ -126,7 +126,7 @@ $echo 'D4N_REPOSITORY="{code_repository_link}"' | sudo tee -a /etc/environment
 $sudo reboot
 ```
 
-## 🖥 Configuration on Worker Node
+## 1.4. Configuration on Worker🖥 Node
 
 ```bash
 ## Update package lists

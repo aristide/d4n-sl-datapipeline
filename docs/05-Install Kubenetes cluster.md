@@ -1,8 +1,8 @@
-# Installation of Kubernetes Cluster
+# 5. Installation of Kubernetes Cluster
 
 This section provides a structured approach to setting up a Kubernetes cluster, including installing necessary dependencies, configuring the cluster, deploying it, and setting up a metrics server for monitoring resource utilization.
 
-## Installation of Required Packages
+## 5.1. Installation of Required Packages
 
 ```bash
 ## Install essential dependencies for Kubernetes cluster management
@@ -13,7 +13,7 @@ $sudo curl -sfL https://get-kk.kubesphere.io | sh -
 $sudo mv kk /usr/local/bin && sudo rm kubekey*
 ```
 
-## Creating and Editing the Cluster Configuration
+## 5.2. Creating and Editing the Cluster Configuration
 
 ```bash
 ## Generate a configuration file for the Kubernetes cluster
@@ -34,14 +34,14 @@ $sudo kk create config -f kubernetes-config.yaml
 $sudo nano kubernetes-config.yaml
 ```
 
-## Deploying the Kubernetes Cluster
+## 5.3. Deploying the Kubernetes Cluster
 
 ```bash
 ## Deploy the cluster using the specified configuration file
 $sudo kk create cluster -f kubernetes-config.yaml
 ```
 
-## Deploying the Metrics Component
+## 5.4. Deploying the Metrics Component
 
 ```bash
 ## Deploy the Metrics Server to monitor cluster resource usage

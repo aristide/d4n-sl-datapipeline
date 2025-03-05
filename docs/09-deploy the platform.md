@@ -1,8 +1,8 @@
-# Deployment of the Minimum Data Lake Stack from the Workstation
+# 9. Deployment of the Minimum DataLake Stack
 
 This section outlines the step-by-step procedure for deploying the essential components of a data lake, including MinIO for storage, JupyterHub for analytics, and Apache NiFi for data ingestion. The deployment is performed from the workstation onto a Kubernetes cluster.
 
-## 1. Deploy MinIO (Storage)
+## 9.1. Deploy MinIO (Storage)
 
 ```powershell
 ## Navigate to the MinIO deployment directory
@@ -31,7 +31,7 @@ C:\>kubectl apply -f local-loadbalancer.yaml
 C:\>kubectl apply -f proxy.nodeport.yaml --namespace d4n-storage
 ```
 
-## 2. Deploy JupyterHub (Analytics)
+## 9.2. Deploy JupyterHub (Analytics)
 
 ```powershell
 ## Navigate to the JupyterHub deployment directory
@@ -59,7 +59,7 @@ C:\>kubectl apply -f local-loadbalancer.yaml
 C:\>kubectl apply -f proxy.nodeport.yaml --namespace d4n-analytics
 ```
 
-## 3. Deploy Apache NiFi (Ingestion)
+## 9.3. Deploy Apache NiFi (Ingestion)
 
 ```powershell
 ## Navigate to the Apache NiFi deployment directory

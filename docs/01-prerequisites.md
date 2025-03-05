@@ -1,5 +1,7 @@
 # Prerequisites
 
+This section outlines the essential prerequisites for deploying the minimum Datalake infrastructure, ensuring that all necessary configurations are in place. It details the collection of critical network and system information, such as node IP addresses and repository links, to facilitate a structured deployment process. The workstation setup includes the installation of essential tools and the configuration of environment variables to maintain a standardized deployment environment. Furthermore, it provides step-by-step instructions for downloading required binaries, setting up working directories, and configuring both master and worker nodes.
+
 ## Collect Essential Informations
 
 The following preparatory information should be readily available:

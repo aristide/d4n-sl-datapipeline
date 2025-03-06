@@ -82,7 +82,7 @@ C:\>[System.Environment]::SetEnvironmentVariable('D4N_MASTER_IP_ADDRESS', "{mast
 C:\>[System.Environment]::SetEnvironmentVariable('D4N_REPOSITORY', "{code_repository_link}", [System.EnvironmentVariableTarget]::User)
 ## Update system PATH with CLI directory
 C:\>$currentPath = [System.Environment]::GetEnvironmentVariable('Path', [System.EnvironmentVariableTarget]::User)
-C:\>$newPath = "$currentPath;$D4N_WORKSPACE_CLI"
+C:\>$newPath = "$currentPath;$Env:D4N_WORKSPACE_CLI"
 C:\>[System.Environment]::SetEnvironmentVariable('Path', $newPath, [System.EnvironmentVariableTarget]::User)
 ```
 
